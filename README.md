@@ -49,15 +49,15 @@ flowchart LR
 | `OdomListener` | `OdomListener.cpp/.hpp` | Subscribes to each robot's odometry and stores position and orientation |
 | Map generator | `src/soa/map_generator/` | Python: writes the maze as a PNG for `map_server` and as a Gazebo world made of boxes (`boxes_map.world`) |
 
-<img src="docs/generated_map.png" width="200" alt="16x16 maze occupancy grid">
-
-*The 16 × 16 maze (white = free). The same array produces the ROS map and the Gazebo world.*
-
 ## How it works
 
 **Path planning.** The map is a 16 × 16 grid in which every cell has a node ID. `RobotClass::findPath` runs a breadth-first search over free cells (4-connected, no diagonals) to fill a distance array from the start node, then walks back from the goal along decreasing distances to build a `nav_msgs/Path`. All moves cost the same, so BFS gives the shortest path, and its length doubles as the "distance" used to pick the nearest prey.
 
+<p align="center"><img src="docs/bfs.gif" width="420" alt="BFS wavefront expanding from the hunter, then the backtracked shortest path"></p>
+
 **Fleeing.** The map is split into four quadrants. When the hunter's path to the prey is short enough, the prey draws a random free cell in a different quadrant from the hunter (re-drawn on a timer). It plans its path with the hunter's current cell marked as an obstacle, so it does not run through the hunter. Robots that aren't being chased stand still.
+
+<p align="center"><img src="docs/fleeing.png" width="420" alt="Hunter in quadrant Q1, prey escaping to a goal in Q4"></p>
 
 **Control.** `LinearSpeedController` steers to the next waypoint. It computes the heading error from the odometry quaternion, turns fast for large errors and slowly for small ones, and creeps forward while the heading error is large. `speed_factor` scales the hunter's linear speed relative to the prey.
 
