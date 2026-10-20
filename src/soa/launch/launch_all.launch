@@ -1,0 +1,11 @@
+<launch>	
+  <!-- GAZEBO -->
+  <include file="$(find soa)/launch/launch_world.launch" >
+  </include> 
+
+  <!-- Main Node -->
+  <!-- <arg name="nbr_robots" default="2"/> -->
+  <arg name="nbr_robots"/>
+  <arg name="speed_factor" default="2"/>
+  <node pkg="soa" name="main_node" type="main_node" output="screen" args="$(arg nbr_robots) $(arg speed_factor)"/>
+</launch>

@@ -1,0 +1,14 @@
+<launch>	
+  <!-- WORLD -->
+  <node pkg="map_server" name="my_map_server" type="map_server" args="$(find soa)/maps/myworld.yaml"/>
+  <!-- RVIZ mit config file-->
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find soa)/rviz/rviz_config_melodic.rviz" />
+
+  <!-- GAZEBO -->
+  <include file="$(find gazebo_ros)launch/empty_world.launch" >
+    <arg name="world_name" value="$(find soa)/worlds/boxes_map.world" />
+    <arg name="gui" value="false" />
+    <arg name="use_sim_time" value="true" />
+    <arg name="paused" value="false" />
+  </include> 
+</launch>
