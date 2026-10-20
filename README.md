@@ -66,8 +66,8 @@ flowchart LR
 Requirements: Ubuntu 18.04, **ROS Melodic** with Gazebo, `turtlebot3_description`, `map_server`, `xacro`, and `gnome-terminal` (used to spawn robots and to delete caught ones).
 
 ```bash
-git clone https://github.com/Abdulhamid-Baghdadi/ros-gazebo-robot-chase.git ~/robot_chase
-cd ~/robot_chase/src && catkin_init_workspace && cd ..
+git clone https://github.com/Abdulhamid-Baghdadi/turtlebot-maze-chase.git ~/turtlebot_maze_chase
+cd ~/turtlebot_maze_chase/src && catkin_init_workspace && cd ..
 catkin_make
 source devel/setup.bash
 roslaunch soa launch_all.launch nbr_robots:=3
